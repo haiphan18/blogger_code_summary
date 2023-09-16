@@ -1,0 +1,63 @@
+<p style='font-size:15px;text-align:center'>ボタンを押すと記事がランダムで表示されます。</p>
+ 
+<div id='myLuckyPost'/>
+ 
+<script>/*<![CDATA[*/
+function showLucky(root) {
+  const feed = root.feed;
+  const entries = feed.entry || [];
+  const entry = feed.entry[0];
+ 
+  for (let j = 0; j < entry.link.length; ++j) {
+    if (entry.link[j].rel == 'alternate') {
+      window.location = entry.link[j].href;
+    }
+  }
+}
+function fetchLuck(luck) {
+  const script = document.createElement('script');
+  script.src = '/feeds/posts/summary?start-index=' + luck + '&max-results=1&alt=json-in-script&callback=showLucky';
+  document.getElementsByTagName('head')[0].appendChild(script);
+}
+function feelingLucky(root) {
+  const feed = root.feed;
+  const total = parseInt(feed.openSearch$totalResults.$t, 10);
+  const luckyNumber = Math.floor(Math.random() * total) + 1;
+  const a = document.createElement('a');
+  a.href = '#random';
+  a.rel = luckyNumber;
+  a.onclick = function() {
+    fetchLuck(this.rel);
+    return false;
+  };
+  a.innerHTML = 'ランダムで記事を見る'; //ボタン名
+  document.getElementById('myLuckyPost').appendChild(a);
+}
+</script> 
+<script src='/feeds/posts/summary?max-results=0&alt=json-in-script&callback=feelingLucky'>
+/*]]>*/</script>
+ 
+<style>
+#myLuckyPost a {
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(to bottom, RoyalBlue, DodgerBlue);
+  font-weight: bold;
+  display: block;
+  padding: 6px;
+  border-radius: 8px;
+  box-shadow: 0px 5px 0px RoyalBlue, 0 10px 10px #333;
+  margin: 1em auto;
+  width: 160px; /*ボタンの横幅*/
+  max-width: 100%;
+  text-align: center;
+}
+#myLuckyPost a:hover {
+  opacity: .9;
+}
+#myLuckyPost a:active {
+  box-shadow: none;
+  top: 3px;
+}
+</style>
