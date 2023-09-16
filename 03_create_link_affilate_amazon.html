@@ -1,0 +1,55 @@
+<div class="amLinkWrap"><input class="form" type="text" id="amLink" oninput="update()" placeholder="Nhập link Amazon tại đây"/>
+ <br>
+
+<p id="output2"></p>
+
+<buton class="aBtn" disabled ><a disabled id="output" href="#" target="_blank">Go back to amazon</a></button>
+</div>
+
+
+
+<script>/*<![CDATA[*/
+  function update() {
+ //if (document.getElementById("input").indexOf("amazon.com")) {
+  var html = document.getElementById("amLink").value;
+  var html = html.replace(/(?=&)*\A?tag|linkId|linkCode=[^&\b\s]+(&?)/g, "");
+   
+  document.getElementById("output2").innerHTML = document.getElementById("amLink").value.split("?")[0] + '?tag=69696969-22';
+
+  document.getElementById("output").href = document.getElementById("amLink").value.split("?")[0] + '?tag=69696969-22';
+  
+  var txt = document.getElementById('amLink').value;
+            if (txt.length == 0) {
+                document.getElementById('output').disabled = true;
+            }
+            else {
+                document.getElementById('output').disabled = false;
+            }
+}
+ 
+</script> 
+
+<style>
+ .amLinkWrap {
+  text-align: center;
+  size: 50px;
+}
+#amLink {
+  width: 50%;
+}
+#output{
+  width:200px;
+  background-color:#FECD57;
+  border:1px solid #FBC43C;
+  border-radius:4px;
+  padding:10px;
+  margin:10px 5px; 
+  color:#333333;
+  text-decoration:none;
+    cursor: pointer;
+}
+#amLink{
+  height:auto;margin:10px auto;padding:14px;
+  }
+  
+</style>
