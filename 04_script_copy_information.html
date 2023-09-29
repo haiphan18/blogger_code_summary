@@ -1,0 +1,44 @@
+<table class="environment_tlb">
+        <tr><th>Info01</ht><td><span>2023-09-29 22:31:44</span><i class="far fa-copy copy_btn"></i></td></tr>
+        <tr><th>Info02</ht><td><span>139.180.211.179</span><i class="far fa-copy copy_btn"></i></td></tr>
+</table>
+
+<script>
+  $(function() {
+  $(document).on('click', '.copy_btn', function(e){
+    var userAgent = navigator.userAgent;
+        elm = $(this).prev('span')[0].innerHTML.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'');
+      if(userAgent.indexOf('iPhone') > 0 || userAgent.indexOf('Android') > 0 && userAgent.indexOf('Mobile') > 0 || userAgent.indexOf('iPad') > 0) {
+        $(document.body).append("<textarea id=\"tmp_copy\" style=\"position:fixed;right:100vw;font-size:16px;\" readonly=\"readonly\">" + elm + "</textarea>");
+        var elm = $("#tmp_copy")[0];
+            elm.select();
+            var range = document.createRange();
+            range.selectNodeContents(elm);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            elm.setSelectionRange(0, 999999);
+            document.execCommand("copy");
+            $(elm).remove();
+      }else{
+        var copyStorage = document.createElement("textarea");
+        copyStorage.value = elm;
+        document.body.appendChild(copyStorage);
+        copyStorage.select();
+        document.execCommand("copy");
+        copyStorage.parentElement.removeChild(copyStorage);
+      }
+    showToast("コピーしました");
+  });
+</script>
+<css>
+  .copy_btn {
+      cursor: pointer;
+      color: #999;
+      font-size: 18px;
+      /* float: right; */
+    }
+    .copy_btn:active {
+      color: #bfbfbf;
+    }
+</css>
